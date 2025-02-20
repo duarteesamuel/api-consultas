@@ -42,4 +42,13 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(DoctorException.class)
+	public ResponseEntity<String> handleDoctorException(
+			DoctorException e, WebRequest request){
+	
+		String message = e.getMessage();
+		
+		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+	}
 }
