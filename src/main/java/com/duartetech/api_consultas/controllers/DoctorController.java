@@ -24,8 +24,10 @@ public class DoctorController {
 	
 	
 	@PostMapping
-	public ResponseEntity<String> registrationDoctor(@Valid @RequestBody Doctor doctor){
-		doctorService.registrationDoctor(doctor);
+	public ResponseEntity<String> registerDoctor(
+			 @RequestBody @Valid Doctor doctor){
+		
+		doctorService.registerDoctor(doctor);
 		
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
@@ -33,7 +35,9 @@ public class DoctorController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<String> updateDoctor(@Valid @PathVariable Long id, @RequestBody Doctor updatedDoctor){
+	public ResponseEntity<String> updateDoctor(
+			 @PathVariable Long id, @RequestBody @Valid Doctor updatedDoctor){
+		
 		doctorService.updateDoctor(id, updatedDoctor);
 		
 		return ResponseEntity

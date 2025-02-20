@@ -11,14 +11,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "doctors")
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Doctor {
@@ -31,7 +33,7 @@ public class Doctor {
 		private String name;
 		
 		@NotBlank(message = "Doctor CRM cannot be empty.")
-		@Size(min = 9, max = 9, message = "The doctor's CRM must be in this format: 123456/RJ.")
+		@Pattern(regexp = "\\d{6}/[A-Z]{2}", message = "CRM must be in the format 123456/RJ")
 		@Column(unique = true)
 		private String crm;
 		

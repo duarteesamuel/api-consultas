@@ -16,26 +16,36 @@ public class DoctorService {
 	@Autowired
 	private  DoctorRepository doctorRepository;
 	
+	//METHOD CREATE
 	@Transactional
-	public void registrationDoctor(Doctor doctor) {
+	public void registerDoctor(Doctor doctor) {
 		if(doctorRepository.existsByCrm(doctor.getCrm())) {
 			throw new CrmAlreadyExistsException("CRM: " + doctor.getCrm() + " is already registered.");
 		}
 		
+		
 		doctorRepository.save(doctor);
 	}
 	
+	//METHOD UPDATE
 	@Transactional
 	public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
-		Doctor foundDoctor = doctorRepository.findById(id)
-				.orElseThrow(
-						() -> new DoctorException("Doctor with id " + id + " not found."));
+		//Responsible method to update all doctor data
+		
+		Doctor foundDoctor = findDoctorById(id);
 		
 		foundDoctor.setName(updatedDoctor.getName());
 		foundDoctor.setCrm(updatedDoctor.getCrm());
 		foundDoctor.setSpecialty(updatedDoctor.getSpecialty());
 		
 		return doctorRepository.save(foundDoctor);
+	}
+	
+	//METHOD FIND
+	public Doctor findDoctorById(Long id) {
+		return doctorRepository.findById(id)
+				.orElseThrow(
+						() -> new DoctorException("Doctor with id " + id + " not found."));
 	}
 	
 }
