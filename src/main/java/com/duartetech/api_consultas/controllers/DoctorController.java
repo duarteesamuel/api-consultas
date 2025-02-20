@@ -1,8 +1,12 @@
 package com.duartetech.api_consultas.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +38,12 @@ public class DoctorController {
 				.body("Doctor has been successfully registered.");
 	}
 	
+	@GetMapping
+	public ResponseEntity<List<Doctor>> displayDoctors(){
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(doctorService.displayDoctors());
+	}
+	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<String> updateDoctor(
 			 @PathVariable Long id, @RequestBody @Valid Doctor updatedDoctor){
@@ -43,6 +53,14 @@ public class DoctorController {
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body("Doctor data with id " + id + " was updated successfully.");
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<String> deleteDoctor(@PathVariable Long id){
+		doctorService.deleteDoctor(id);
+		
+		return ResponseEntity.status(HttpStatus.OK)
+				.body("Doctor with ID " + id + " has been deactivated.");
 	}
 	
 }

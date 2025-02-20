@@ -1,9 +1,12 @@
 package com.duartetech.api_consultas.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.duartetech.api_consultas.entities.Doctor;
+import com.duartetech.api_consultas.entities.enums.Status;
 import com.duartetech.api_consultas.exceptions.CrmAlreadyExistsException;
 import com.duartetech.api_consultas.exceptions.DoctorException;
 import com.duartetech.api_consultas.repositories.DoctorRepository;
@@ -27,6 +30,17 @@ public class DoctorService {
 		doctorRepository.save(doctor);
 	}
 	
+	//METHOD READ
+	public List<Doctor> displayDoctors(){
+		List<Doctor> doctors = doctorRepository.findAll();
+		
+		if(doctors.isEmpty()) {
+			throw new DoctorException("No doctor registered in the system.");
+		}
+		
+		return doctors;
+	}
+	
 	//METHOD UPDATE
 	@Transactional
 	public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
@@ -39,6 +53,17 @@ public class DoctorService {
 		foundDoctor.setSpecialty(updatedDoctor.getSpecialty());
 		
 		return doctorRepository.save(foundDoctor);
+	}
+	
+	//METHOD DELETE
+	@Transactional
+	public void deleteDoctor(Long id) {
+		//Responsible for changing the Doctor's status
+		Doctor foundDoctor = findDoctorById(id);
+		
+		foundDoctor.setStatus(Status.INACTIVE);
+		
+		doctorRepository.save(foundDoctor);
 	}
 	
 	//METHOD FIND
