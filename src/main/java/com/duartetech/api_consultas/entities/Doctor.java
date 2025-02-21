@@ -24,6 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Doctor {
+	
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "id_doctor")
@@ -43,5 +44,12 @@ public class Doctor {
 		@Enumerated(EnumType.STRING)
 		@Column(nullable = false)
 		private Status status = Status.ACTIVE;
+		
+		public Doctor(String name, String crm, String specialty) {
+			this.name = name;
+			this.crm = crm;
+			this.specialty = specialty;
+			this.status = Status.ACTIVE;
+		}
 		
 }
