@@ -25,8 +25,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/doctors")
-public class DoctorController {
+@RequestMapping(value = "/api/doctors")
+public class DoctorApiController {
 	
 	@Autowired
 	private DoctorService doctorService;
@@ -78,8 +78,12 @@ public class DoctorController {
 	})
 	@GetMapping
 	public ResponseEntity<List<Doctor>> displayDoctors(){
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(doctorService.displayDoctors());
+		
+		List<Doctor> doctors = doctorService.displayDoctors();
+		
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(doctors);
+		
 	}
 	
 	@Operation(
