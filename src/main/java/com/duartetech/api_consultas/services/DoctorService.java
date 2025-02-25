@@ -46,7 +46,7 @@ public class DoctorService {
 	@Transactional
 	public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
 		//Responsible method to update all doctor data
-		
+		//Implement changes to the new attributes of the doctor entity
 		Doctor foundDoctor = findDoctorById(id);
 		
 		foundDoctor.setName(updatedDoctor.getName());

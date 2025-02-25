@@ -31,6 +31,8 @@ public class DoctorApiController {
 	@Autowired
 	private DoctorService doctorService;
 	
+	//Add the new attributes in the api documentation
+
 	@Operation(
 			summary = "Register a new doctor",
 			description = """
@@ -56,7 +58,17 @@ public class DoctorApiController {
 	public ResponseEntity<String> registerDoctor(
 			@RequestBody @Valid DoctorRequestDTO dto){
 		
-		Doctor doctor = new Doctor(dto.name(), dto.crm(), dto.specialty());
+		Doctor doctor = Doctor.builder()
+				.name(dto.name())
+				.email(dto.email())
+				.telephone(dto.telephone())
+				.gender(dto.gender())
+				.nationality(dto.nationality())
+				.dateOfBirth(dto.dateOfBirth())
+				.crm(dto.crm())
+				.specialty(dto.specialty())
+				.build();
+		
 		doctorService.registerDoctor(doctor);
 		
 		return ResponseEntity
@@ -112,13 +124,7 @@ public class DoctorApiController {
 	public ResponseEntity<String> updateDoctor(
 			 @PathVariable Long id, @RequestBody @Valid DoctorRequestDTO dto){
 		
-		Doctor updateDoctor = new Doctor();
-		
-		updateDoctor.setName(dto.name());
-		updateDoctor.setCrm(dto.crm());
-		updateDoctor.setSpecialty(dto.specialty());
-		
-		doctorService.updateDoctor(id, updateDoctor);
+		//Implement changes to new doctor attributes to update data
 		
 		return ResponseEntity
 				.status(HttpStatus.OK)

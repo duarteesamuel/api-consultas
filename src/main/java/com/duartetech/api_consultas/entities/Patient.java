@@ -42,6 +42,7 @@ public class Patient {
 	@NotBlank(message = "The patient's gender cannot be empty")
 	private String gender;
 	
+	@Column(nullable = true)
 	private String nationality;
 	
 	@NotBlank(message = "The patient's cpf cannot be empty")
