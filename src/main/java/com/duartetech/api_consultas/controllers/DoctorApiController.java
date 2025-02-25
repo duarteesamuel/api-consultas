@@ -69,7 +69,7 @@ public class DoctorApiController {
 			description = """
 					This endpoint returns all doctors registered in the system, whether with active or inactive status
 					
-					If the system does not have any doctor registered, a 400 bad request will be returned.
+					If the system does not have any doctor registered, a 404 not found will be returned.
 					""")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Doctors found in the system."),
@@ -83,7 +83,6 @@ public class DoctorApiController {
 		
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(doctors);
-		
 	}
 	
 	@Operation(
@@ -164,7 +163,7 @@ public class DoctorApiController {
 		        they will no longer be available in the active list of doctors.
 		        """,  
 		    parameters = {
-		        @Parameter(name = "id", description = "ID of the doctor to retrieve", required = true)  // Descrição do parâmetro do ID na URL
+		        @Parameter(name = "id", description = "Doctor data using the provided ID", required = true) 
 		    })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Doctor details retrieved."),

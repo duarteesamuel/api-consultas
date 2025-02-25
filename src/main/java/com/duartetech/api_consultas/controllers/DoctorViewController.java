@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.duartetech.api_consultas.entities.Doctor;
-import com.duartetech.api_consultas.exceptions.DoctorException;
+import com.duartetech.api_consultas.exceptions.DataNotFoundException;
 import com.duartetech.api_consultas.services.DoctorService;
 
 @Controller
@@ -24,7 +24,7 @@ public class DoctorViewController {
 		try {
 			List<Doctor> doctors = doctorService.displayDoctors();
 			model.addAttribute("doctors",doctors);
-		} catch(DoctorException e) {
+		} catch(DataNotFoundException e) {
 			model.addAttribute("message", e.getMessage());
 		}
 		

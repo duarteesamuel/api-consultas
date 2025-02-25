@@ -6,5 +6,4 @@ public record DoctorRequestDTO(
 		@NotBlank String name,
 		@NotBlank String crm,
 		@NotBlank String specialty) {
-
 }

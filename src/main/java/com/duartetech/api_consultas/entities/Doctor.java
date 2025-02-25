@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class Doctor {
 		private Long id;
 		
 		@NotBlank(message = "Doctor's name cannot be empty.")
+		@Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
 		private String name;
 		
 		@NotBlank(message = "Doctor CRM cannot be empty.")

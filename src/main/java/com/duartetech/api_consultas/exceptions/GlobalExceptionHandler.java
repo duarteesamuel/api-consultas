@@ -1,7 +1,10 @@
 package com.duartetech.api_consultas.exceptions;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,20 +38,47 @@ public class GlobalExceptionHandler {
 	 *  is already registered
 	 */
 	@ExceptionHandler(CrmAlreadyExistsException.class)
-	public ResponseEntity<String> handleCrmAlreadyExistsException(
-			CrmAlreadyExistsException e, WebRequest request){
+	public ResponseEntity<Object> handleCrmAlreadyExistsException(
+			CrmAlreadyExistsException e){
 		
-		String message = e.getMessage();
+		Map<String, Object> body = new LinkedHashMap<>();
 		
-		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		body.put("timestamp", LocalDateTime.now());
+		body.put("status", HttpStatus.BAD_REQUEST);
+		body.put("error", "Crm already exists");
+		body.put("message", e.getMessage());
+		
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+		
 	}
 	
-	@ExceptionHandler(DoctorException.class)
-	public ResponseEntity<String> handleDoctorException(
-			DoctorException e, WebRequest request){
-	
-		String message = e.getMessage();
+	@ExceptionHandler(CpfAlreadyExistsException.class)
+	public ResponseEntity<Object> handleCpfAlreadyExistsException(
+			CpfAlreadyExistsException e){
 		
-		return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+		Map<String, Object> body = new LinkedHashMap<>();
+		
+		body.put("timestamp", LocalDateTime.now());
+		body.put("status", HttpStatus.BAD_REQUEST);
+		body.put("error", "Cpf already exists");
+		body.put("message", e.getMessage());
+		
+		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	
+	@ExceptionHandler(DataNotFoundException.class)
+	public ResponseEntity<Object> handleDoctorException(
+			DataNotFoundException e){
+	
+		Map<String, Object> body = new LinkedHashMap<>();
+		
+		body.put("timestamp", LocalDateTime.now());
+		body.put("status", HttpStatus.NOT_FOUND);
+		body.put("error", "No data found");
+		body.put("message", e.getMessage());
+		
+		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
 	}
 }

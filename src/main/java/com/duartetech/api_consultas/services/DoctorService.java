@@ -2,13 +2,14 @@ package com.duartetech.api_consultas.services;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.duartetech.api_consultas.entities.Doctor;
 import com.duartetech.api_consultas.entities.enums.Status;
 import com.duartetech.api_consultas.exceptions.CrmAlreadyExistsException;
-import com.duartetech.api_consultas.exceptions.DoctorException;
+import com.duartetech.api_consultas.exceptions.DataNotFoundException;
 import com.duartetech.api_consultas.repositories.DoctorRepository;
 
 import jakarta.transaction.Transactional;
@@ -35,7 +36,7 @@ public class DoctorService {
 		List<Doctor> doctors = doctorRepository.findAll();
 		
 		if(doctors.isEmpty()) {
-			throw new DoctorException("No doctor registered in the system.");
+			throw new DataNotFoundException("No doctor registered in the system.");
 		}
 		
 		return doctors;
@@ -70,7 +71,7 @@ public class DoctorService {
 	public Doctor findDoctorById(Long id) {
 		return doctorRepository.findById(id)
 				.orElseThrow(
-						() -> new DoctorException("Doctor with id " + id + " not found."));
+						() -> new DataNotFoundException("Doctor with id " + id + " not found."));
 	}
 	
 }
