@@ -51,6 +51,7 @@ public class PatientApiController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Patient registered."),
 			@ApiResponse(responseCode = "400", description = "Invalid request data. Check the provided information."),
+			@ApiResponse(responseCode = "409", description = "Attempt to register existing data"),
 			@ApiResponse(responseCode = "500", description = "Unexpected error while processing the request.")
 	})
 	@PostMapping
@@ -107,7 +108,7 @@ public class PatientApiController {
 			@ApiResponse(responseCode = "400", description = "Invalid input data."),
 			@ApiResponse(responseCode = "500", description = "Unexpected error while processing the request.")
 	})
-	@GetMapping
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Patient> findPatientById(@PathVariable Long id){
 		Patient patient = patientService.findPatientById(id);
 		

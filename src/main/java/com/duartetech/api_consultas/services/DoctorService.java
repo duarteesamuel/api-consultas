@@ -2,7 +2,6 @@ package com.duartetech.api_consultas.services;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +9,8 @@ import com.duartetech.api_consultas.entities.Doctor;
 import com.duartetech.api_consultas.entities.enums.Status;
 import com.duartetech.api_consultas.exceptions.CrmAlreadyExistsException;
 import com.duartetech.api_consultas.exceptions.DataNotFoundException;
+import com.duartetech.api_consultas.exceptions.EmailAlreadyExistsException;
+import com.duartetech.api_consultas.exceptions.TelephoneAlreadyExistsException;
 import com.duartetech.api_consultas.repositories.DoctorRepository;
 
 import jakarta.transaction.Transactional;
@@ -26,7 +27,12 @@ public class DoctorService {
 		if(doctorRepository.existsByCrm(doctor.getCrm())) {
 			throw new CrmAlreadyExistsException("CRM: " + doctor.getCrm() + " is already registered.");
 		}
-		
+		if(doctorRepository.existsByEmail(doctor.getEmail())) {
+			throw new EmailAlreadyExistsException("E-mail: " + doctor.getEmail() + " is already registered.");
+		}
+		if(doctorRepository.existsByTelephone(doctor.getTelephone())) {
+			throw new TelephoneAlreadyExistsException("Telephone: " + doctor.getTelephone() + " is already registered.");
+		}
 		
 		doctorRepository.save(doctor);
 	}

@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -43,12 +44,13 @@ public class Doctor {
 		
 	
 		@NotBlank(message = "The doctor's email cannot be empty")
-		//implement a regex to validate the email
+		@Email(message = "The doctor's email must be in this format: name@email.com")
+		@Column(unique = true)
 		private String email;
 		
 		@NotBlank(message = "The doctor's email cannot be empty")
 		@Size(min = 11, max = 11, message = "The phone must contain only 11 numbers")
-		//Implement a regex to validate the phone
+		@Column(unique = true)
 		private String telephone;
 		
 		@NotBlank(message = "The doctor's gender cannot be empty")
@@ -71,7 +73,6 @@ public class Doctor {
 		private String specialty;
 		
 		@Enumerated(EnumType.STRING)
-		@Column(nullable = false)
 		private Status status = Status.ACTIVE;
 		
 		public Doctor(String name, String email, String telephone, String gender, String nationality,

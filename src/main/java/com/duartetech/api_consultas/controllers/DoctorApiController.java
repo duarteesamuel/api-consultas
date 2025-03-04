@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.duartetech.api_consultas.controllers.dto.DoctorRequestDTO;
 import com.duartetech.api_consultas.entities.Doctor;
+import com.duartetech.api_consultas.entities.enums.Status;
 import com.duartetech.api_consultas.services.DoctorService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +33,6 @@ public class DoctorApiController {
 	private DoctorService doctorService;
 	
 	//Add the new attributes in the api documentation
-
 	@Operation(
 			summary = "Register a new doctor",
 			description = """
@@ -52,6 +52,7 @@ public class DoctorApiController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Doctor registered."),
 			@ApiResponse(responseCode = "400", description = "Invalid request data. Check the provided information."),
+			@ApiResponse(responseCode = "409", description = "Attempt to register existing data"),
 			@ApiResponse(responseCode = "500", description = "Unexpected error while processing the request.")
 	})
 	@PostMapping
@@ -67,6 +68,7 @@ public class DoctorApiController {
 				.dateOfBirth(dto.dateOfBirth())
 				.crm(dto.crm())
 				.specialty(dto.specialty())
+				.status(Status.ACTIVE)
 				.build();
 		
 		doctorService.registerDoctor(doctor);

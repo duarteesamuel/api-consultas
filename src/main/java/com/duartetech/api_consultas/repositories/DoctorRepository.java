@@ -8,6 +8,8 @@ import com.duartetech.api_consultas.entities.Doctor;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
 
-	//Extra method to check if a crm already exists
+	//Extra method to check if a crm, email and telephone already exists
 	boolean existsByCrm(String crm);
+	boolean existsByEmail(String email);
+	boolean existsByTelephone(String telephone);
 }

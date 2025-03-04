@@ -11,18 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
 	
-	/*Responsible method for providing a concise response regarding
-	 *  errors that have been found
-	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<String>> handleValidationExceptions(
     		MethodArgumentNotValidException e){
+		/*Responsible method for providing a concise response regarding
+		 *  errors that have been found
+		 */
 		
 		List<String> errors = new ArrayList<>();
 		
@@ -34,44 +33,84 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
 	
-	/*Responsible method for launching a concise response if a CRM
-	 *  is already registered
-	 */
 	@ExceptionHandler(CrmAlreadyExistsException.class)
 	public ResponseEntity<Object> handleCrmAlreadyExistsException(
 			CrmAlreadyExistsException e){
+		/*Responsible method for launching a concise response if a CRM
+		 *  is already registered
+		 */
 		
 		Map<String, Object> body = new LinkedHashMap<>();
 		
 		body.put("timestamp", LocalDateTime.now());
-		body.put("status", HttpStatus.BAD_REQUEST);
+		body.put("status", HttpStatus.CONFLICT);
 		body.put("error", "Crm already exists");
 		body.put("message", e.getMessage());
 		
-		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 		
 	}
+	
 	
 	@ExceptionHandler(CpfAlreadyExistsException.class)
 	public ResponseEntity<Object> handleCpfAlreadyExistsException(
 			CpfAlreadyExistsException e){
+		/*Responsible method for launching a concise response if a CPF
+		 *  is already registered
+		 */
 		
 		Map<String, Object> body = new LinkedHashMap<>();
 		
 		body.put("timestamp", LocalDateTime.now());
-		body.put("status", HttpStatus.BAD_REQUEST);
+		body.put("status", HttpStatus.CONFLICT);
 		body.put("error", "Cpf already exists");
 		body.put("message", e.getMessage());
 		
-		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-		
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 	}
 	
 	
-	@ExceptionHandler(DataNotFoundException.class)
-	public ResponseEntity<Object> handleDoctorException(
-			DataNotFoundException e){
+	@ExceptionHandler(EmailAlreadyExistsException.class)
+	public ResponseEntity<Object> handleEmailAlreadyExistsException(
+			EmailAlreadyExistsException e){
+		/*Responsible method for launching a concise response if a E-mail
+		 *  is already registered
+		 */
+		
+		Map<String, Object> body = new LinkedHashMap<>();
+		
+		body.put("timestamp", LocalDateTime.now());
+		body.put("status", HttpStatus.CONFLICT);
+		body.put("error", "Email already exists");
+		body.put("error", e.getMessage());
+		
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
 	
+	
+	@ExceptionHandler(TelephoneAlreadyExistsException.class)
+	public ResponseEntity<Object> handleTelephoneAlreadyExistsException(
+			TelephoneAlreadyExistsException e){
+		/*Responsible method for launching a concise response if a Telephone
+		 *  is already registered
+		 */
+		
+		Map<String, Object> body = new LinkedHashMap<>();
+		body.put("timestamp", LocalDateTime.now());
+		body.put("status", HttpStatus.CONFLICT);
+		body.put("error", "Telephone already exists");
+		body.put("message", e.getMessage());
+		
+		return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+	}
+
+	
+	@ExceptionHandler(DataNotFoundException.class)
+	public ResponseEntity<Object> handleDataNotFoundException(
+			DataNotFoundException e){
+		
+		/* Responsible method for informing if the database is empty*/
+		
 		Map<String, Object> body = new LinkedHashMap<>();
 		
 		body.put("timestamp", LocalDateTime.now());
