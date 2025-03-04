@@ -36,11 +36,13 @@ public class PatientApiController {
 					This endpoint registers a new patient in the system.
 					The request must include a valid JSON object containing the following fields:
 					
-					- **name** (String, required): Patient's full name.
-					- **gender** (String, required): Patient's gender.
-					- **nationality** (String, not required): Patient's nationality.
-					- **cpf** (String, required): Patient's unique document.
-					- **dateOfBirth** (LocalDate, required): Patient's date of birth.
+					- **name** (String, required): The patient's full name.
+					- **email** (String, required): The doctor's unique email.
+					- **telephone** (String, required): The doctor's unique telephone.
+					- **gender** (String, required): The patient's gender.
+					- **nationality** (String, not required): The patient's nationality.
+					- **cpf** (String, required): The patient's unique document.
+					- **dateOfBirth** (LocalDate, required): The patient's date of birth.
 					
 					**Notes**
 					- The **id** is automatically generated and should not be provide in the request.
@@ -60,6 +62,8 @@ public class PatientApiController {
 		
 		Patient patient = Patient.builder()
 				.name(dto.name())
+				.email(dto.email())
+				.telephone(dto.telephone())
 				.gender(dto.gender())
 				.nationality(dto.nationality())
 				.cpf(dto.cpf())

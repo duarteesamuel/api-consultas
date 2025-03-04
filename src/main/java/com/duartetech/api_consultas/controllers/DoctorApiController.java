@@ -39,13 +39,19 @@ public class DoctorApiController {
 					This endpoint registers a new doctor in the system.
 					The request must include a valid JSON object containing the following fields:
 					
-					- **name** (String, required): Full name of the doctor.
+					- **name** (String, required): The doctor's name.
+					- **email** (String, required): The doctor's email.
+					- **telephone** (String, required): The doctor's unique telephone.
+					- **gender** (String, required): The doctor's gender.
+					- **nationality(String, not required): The doctor's nationality.
+					- **dateOfBirth(String, required): The doctor's date of birth.
 					- **crm** (String, required): Unique medical license number.
 					- **specialty** (String, required): Medical specialty of the doctor.
 					
 					**Notes**
 					- The **id** is automatically generated and should not be provide in the request.
 					- The **status** is always set to `ACTIVE`upon registration, so it should not be included in the request.
+					- If the nationality is not provided, it defaults to "Brasileira".
 					
 					If any required field is missing or invalid, a **400 Bad Request** response will be returned. 
 					""")

@@ -35,6 +35,9 @@ public class DoctorService {
 		if(doctorRepository.existsByTelephone(doctor.getTelephone())) {
 			errors.add("Telephone: " + doctor.getTelephone() + " is already registered.");
 		}
+		if(doctor.getNationality() == null || doctor.getNationality().isEmpty()) {
+			doctor.setNationality("Brasileira");
+		}
 		
 		if(!errors.isEmpty()) {
 			throw new MultipleConflictException(errors);

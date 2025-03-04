@@ -9,4 +9,6 @@ import com.duartetech.api_consultas.entities.Patient;
 public interface PatientRepository extends JpaRepository<Patient, Long>{
 	
 	boolean existsByCpf(String cpf);
+	boolean existsByEmail(String email);
+	boolean existsByTelephone(String telephone);
 }
