@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.duartetech.api_consultas.controllers.dto.PatientRequestDTO;
 import com.duartetech.api_consultas.entities.Patient;
-import com.duartetech.api_consultas.exceptions.CpfAlreadyExistsException;
 import com.duartetech.api_consultas.exceptions.DataNotFoundException;
 import com.duartetech.api_consultas.exceptions.MultipleConflictException;
 import com.duartetech.api_consultas.repositories.PatientRepository;
@@ -22,26 +22,33 @@ public class PatientService {
 	
 	//METHOD CREATE
 	@Transactional
-	public void registerPatient(Patient patient) {
+	public void registerPatient(PatientRequestDTO dto) {
 		
 		List<String> errors = new ArrayList<>();
 		
-		if(patientRepository.existsByCpf(patient.getCpf())) {
-			errors.add("CPF: "+patient.getCpf()+" already exists.");
+		if(patientRepository.existsByCpf(dto.cpf())) {
+			errors.add("CPF: "+dto.cpf()+" already exists.");
 		}
-		if(patientRepository.existsByEmail(patient.getEmail())) {
-			errors.add("E-mail: "+patient.getEmail()+ " already exists.");
+		if(patientRepository.existsByEmail(dto.email())) {
+			errors.add("E-mail: "+dto.email()+ " already exists.");
 		}
-		if(patientRepository.existsByTelephone(patient.getTelephone())) {
-			errors.add("Telephone: "+patient.getTelephone()+ " already exists.");
-		}
-		if(patient.getNationality() == null || patient.getNationality().isEmpty()) {
-			patient.setNationality("Brasileira");
+		if(patientRepository.existsByTelephone(dto.telephone())) {
+			errors.add("Telephone: "+dto.telephone()+ " already exists.");
 		}
 		
 		if(!errors.isEmpty()) {
 			throw new MultipleConflictException(errors);
 		}
+		
+		Patient patient = Patient.builder()
+				.name(dto.name())
+				.email(dto.email())
+				.telephone(dto.telephone())
+				.gender(dto.gender())
+				.nationality(dto.nationality())
+				.cpf(dto.cpf())
+				.dateOfBirth(dto.dateOfBirth())
+				.build();
 		
 		patientRepository.save(patient);
 	}

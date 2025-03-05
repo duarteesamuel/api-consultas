@@ -60,17 +60,7 @@ public class PatientApiController {
 	public ResponseEntity<?> registerPatient(
 			@RequestBody @Valid PatientRequestDTO dto){
 		
-		Patient patient = Patient.builder()
-				.name(dto.name())
-				.email(dto.email())
-				.telephone(dto.telephone())
-				.gender(dto.gender())
-				.nationality(dto.nationality())
-				.cpf(dto.cpf())
-				.dateOfBirth(dto.dateOfBirth())
-				.build();
-		
-		patientService.registerPatient(patient);
+		patientService.registerPatient(dto);
 		
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body("Patient registered successfully.");

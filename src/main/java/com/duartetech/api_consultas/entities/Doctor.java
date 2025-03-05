@@ -11,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -56,7 +57,6 @@ public class Doctor {
 		@NotBlank(message = "The doctor's gender cannot be empty")
 		private String gender;
 		
-		@Column(nullable = true)
 		private String nationality;
 		
 		@Column(name = "date_of_birth")
@@ -88,4 +88,11 @@ public class Doctor {
 			this.status = Status.ACTIVE;
 		}
 		
+		 @PrePersist
+		 public void setDefaultNationality() {
+		     if (this.nationality == null || this.nationality.trim().isEmpty()) {
+		          this.nationality = "Brasileira";
+		     }
+		 }
+		 
 }

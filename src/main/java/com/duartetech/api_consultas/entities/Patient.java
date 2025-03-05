@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -73,5 +74,12 @@ public class Patient {
 		this.cpf = cpf;
 		this.dateOfBirth = dateOfBirth;
 	}
+	
+	@PrePersist
+	 public void setDefaultNationality() {
+	     if (this.nationality == null || this.nationality.trim().isEmpty()) {
+	          this.nationality = "Brasileira";
+	     }
+	 }
 	
 }

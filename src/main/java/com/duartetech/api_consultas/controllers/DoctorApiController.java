@@ -65,19 +65,7 @@ public class DoctorApiController {
 	public ResponseEntity<String> registerDoctor(
 			@RequestBody @Valid DoctorRequestDTO dto){
 		
-		Doctor doctor = Doctor.builder()
-				.name(dto.name())
-				.email(dto.email())
-				.telephone(dto.telephone())
-				.gender(dto.gender())
-				.nationality(dto.nationality())
-				.dateOfBirth(dto.dateOfBirth())
-				.crm(dto.crm())
-				.specialty(dto.specialty())
-				.status(Status.ACTIVE)
-				.build();
-		
-		doctorService.registerDoctor(doctor);
+		doctorService.registerDoctor(dto);
 		
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
@@ -132,7 +120,7 @@ public class DoctorApiController {
 	public ResponseEntity<String> updateDoctor(
 			 @PathVariable Long id, @RequestBody @Valid DoctorRequestDTO dto){
 		
-		//Implement changes to new doctor attributes to update data
+		doctorService.updateDoctor(id, dto);
 		
 		return ResponseEntity
 				.status(HttpStatus.OK)
